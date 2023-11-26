@@ -110,3 +110,20 @@ shaderUniformMat4f(Shader *shader, const char *text, Matrix4f mat)
 
 	glUniformMatrix4fv(location, 1, GL_FALSE, &mat.m[0][0]);
 }
+
+void
+shaderUniformInt(Shader *shader, const char *text, int value)
+{
+	if (!shader->programID) {
+		fprintf(stderr, "ERROR: Shader program is empty.\n");
+		return;
+	}
+
+	int location = glGetUniformLocation(shader->programID, text);
+	if (location == -1) {
+		fprintf(stderr, "ERROR: Uniform %s is not found.\n", text);
+		return;
+	}
+
+	glUniform1i(location, value);
+}

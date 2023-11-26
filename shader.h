@@ -12,5 +12,6 @@ typedef struct {
 void createShader(Shader *shader, const char *vertexPath, const char *fragmentPath);
 
 void shaderUniformMat4f(Shader *shader, const char *text, Matrix4f mat);
+void shaderUniformInt(Shader *shader, const char *text, int value);
 
 #endif
