@@ -120,7 +120,9 @@ perspective(float fovy, float aspect, float zNear, float zFar)
 Matrix4f
 ortho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	Matrix4f Result = mat4f(1.0f);
+    // https://wikimedia.org/api/rest_v1/media/math/render/svg/8ea4e438d7439b8fa504fb53fd7fafd678007243
+	
+    Matrix4f Result = mat4f(1.0f);
 	Result.m[0][0] = 2.0f / (right - left);
 	Result.m[1][1] = 2.0f / (top - bottom);
 	Result.m[2][2] = -2.0f / (zFar - zNear);

@@ -13,5 +13,6 @@ void createShader(Shader *shader, const char *vertexPath, const char *fragmentPa
 
 void shaderUniformMat4f(Shader *shader, const char *text, Matrix4f mat);
 void shaderUniformInt(Shader *shader, const char *text, int value);
+void shaderUniformVec3f(Shader *shader, const char *text, Vector3f vec);
 
 #endif

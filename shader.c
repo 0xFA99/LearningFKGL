@@ -3,6 +3,23 @@
 
 #include "shader.h"
 
+static int
+getUniformLocation(unsigned int programId, const char *text)
+{
+	if (!programId) {
+		fprintf(stderr, "ERROR: Shader program is empty.\n");
+		return -1;
+	}
+
+	int location = glGetUniformLocation(programId, text);
+	if (location == -1) {
+		fprintf(stderr, "ERROR: Uniform %s is not found.\n", text);
+		return -1;
+	}
+
+	return location;
+}
+
 static char*
 readShaderFile(const char *filename)
 {
@@ -97,16 +114,7 @@ createShader(Shader *shader, const char *vertexPath, const char *fragmentPath)
 void
 shaderUniformMat4f(Shader *shader, const char *text, Matrix4f mat)
 {
-	if (!shader->programID) {
-		fprintf(stderr, "ERROR: Shader program is empty.\n");
-		return;
-	}
-
-	int location = glGetUniformLocation(shader->programID, text);
-	if (location == -1) {
-		fprintf(stderr, "ERROR: Uniform %s is not found.\n", text);
-		return;
-	}
+	int location = getUniformLocation(shader->programID, text);
 
 	glUniformMatrix4fv(location, 1, GL_FALSE, &mat.m[0][0]);
 }
@@ -114,16 +122,15 @@ shaderUniformMat4f(Shader *shader, const char *text, Matrix4f mat)
 void
 shaderUniformInt(Shader *shader, const char *text, int value)
 {
-	if (!shader->programID) {
-		fprintf(stderr, "ERROR: Shader program is empty.\n");
-		return;
-	}
-
-	int location = glGetUniformLocation(shader->programID, text);
-	if (location == -1) {
-		fprintf(stderr, "ERROR: Uniform %s is not found.\n", text);
-		return;
-	}
+	int location = getUniformLocation(shader->programID, text);
 
 	glUniform1i(location, value);
+}
+
+void
+shaderUniformVec3f(Shader *shader, const char *text, Vector3f color)
+{
+	int location = getUniformLocation(shader->programID, text);
+
+	glUniform3f(location, color.x, color.y, color.z);
 }
